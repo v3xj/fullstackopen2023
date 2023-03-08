@@ -1,0 +1,8 @@
+title 0.6 SPA Uusi muistiinpano
+
+selain->palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over selain:
+selain suorittaa tapahtumankäsittelijän
+joka renderöi muistiinpanot näytölle
+end note
