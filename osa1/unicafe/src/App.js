@@ -1,11 +1,33 @@
 import { useState } from 'react'
 
+const Statistics = (props) => {
+  return (
+    <div>
+      <div>
+        good {props.feedback.good}
+      </div>
+      <div>
+        neutral {props.feedback.neutral}
+      </div>
+      <div>
+        bad {props.feedback.bad}
+      </div>
+      <div>
+        all {props.feedback.good + props.feedback.neutral + props.feedback.bad}
+      </div>
+      <div>
+        average {props.feedback.average / props.feedback.total}
+      </div>
+      <div>
+        positive {(props.feedback.good / props.feedback.total) * 100} %
+      </div>
+    </div>
+  )
+}
+
 const App = () => {
   const [feedback, setFeedback] = useState({
-    good: 0, neutral: 0, bad: 0
-  })
-  const [average, setAverage] = useState({
-    average: 0
+    good: 0, neutral: 0, bad: 0, total: 0, average: 0
   })
 
   const handleGoodClick = () => {
@@ -13,12 +35,10 @@ const App = () => {
       good: feedback.good + 1,
       neutral: feedback.neutral,
       bad: feedback.bad,
-    }
-    const newAverage = {
-      average: average.average + 1
+      total: feedback.total + 1,
+      average: feedback.average + 1
     }
     setFeedback(newClicks)
-    setAverage(newAverage)
   }
 
   const handleNeutralClick = () => {
@@ -26,13 +46,10 @@ const App = () => {
       good: feedback.good,
       neutral: feedback.neutral + 1,
       bad: feedback.bad,
-      average: average.average
-    }
-    const newAverage = {
-      average: average.average
+      total: feedback.total + 1,
+      average: feedback.average
     }
     setFeedback(newClicks)
-    setAverage(newAverage)
   }
 
   const handleBadClick = () => {
@@ -40,13 +57,10 @@ const App = () => {
       good: feedback.good,
       neutral: feedback.neutral,
       bad: feedback.bad + 1,
-      average: average.average - 1
-    }
-    const newAverage = {
-      average: average.average - 1
+      total: feedback.total + 1,
+      average: feedback.average - 1
     }
     setFeedback(newClicks)
-    setAverage(newAverage)
   }
 
 
@@ -61,25 +75,10 @@ const App = () => {
         <button onClick={handleBadClick}>bad</button>
       </div>
       <div>
-        <h1>statistics</h1>
+        <h1>Statistics</h1>
       </div>
       <div>
-      good {feedback.good}
-      </div>
-      <div>
-      neutral {feedback.neutral}
-      </div>
-      <div>
-      bad {feedback.bad}
-      </div>
-      <div>
-        all {feedback.good + feedback.neutral + feedback.bad}
-      </div>
-      <div>
-        average {average.average / (feedback.good + feedback.neutral + feedback.bad)}
-      </div>
-      <div>
-        positive {feedback.good / (feedback.good + feedback.neutral + feedback.bad) * 100} %
+        <Statistics feedback={feedback}/>
       </div>
     </div>
   )
