@@ -9,28 +9,27 @@ const Statistics = (props) => {
     )
   } 
     return (
-      <div>
-        <div>
-          good {props.feedback.good}
-        </div>
-        <div>
-          neutral {props.feedback.neutral}
-        </div>
-        <div>
-          bad {props.feedback.bad}
-        </div>
-        <div>
-          all {props.feedback.good + props.feedback.neutral + props.feedback.bad}
-        </div>
-        <div>
-          average {props.feedback.average / props.feedback.total}
-        </div>
-        <div>
-          positive {(props.feedback.good / props.feedback.total) * 100} %
-        </div>
-      </div>
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={props.feedback.good} />
+          <StatisticLine text="neutral" value={props.feedback.neutral} />
+          <StatisticLine text="bad" value={props.feedback.bad} />
+          <StatisticLine text="total" value={props.feedback.total} />
+          <StatisticLine text="average" value={props.feedback.average / props.feedback.total} />
+          <StatisticLine text="positive" value={(props.feedback.good / props.feedback.total) * 100 + '%'} />
+        </tbody>
+      </table>
     )
   
+}
+
+const StatisticLine = ({text, value}) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
 }
 
 const App = () => {
