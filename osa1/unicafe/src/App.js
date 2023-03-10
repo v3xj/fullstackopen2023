@@ -8,19 +8,19 @@ const Statistics = (props) => {
       </div>
     )
   } 
-    return (
-      <table>
-        <tbody>
-          <StatisticLine text="good" value={props.feedback.good} />
-          <StatisticLine text="neutral" value={props.feedback.neutral} />
-          <StatisticLine text="bad" value={props.feedback.bad} />
-          <StatisticLine text="total" value={props.feedback.total} />
-          <StatisticLine text="average" value={props.feedback.average / props.feedback.total} />
-          <StatisticLine text="positive" value={(props.feedback.good / props.feedback.total) * 100 + '%'} />
-        </tbody>
-      </table>
-    )
-  
+
+  return (
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={props.feedback.good} />
+        <StatisticLine text="neutral" value={props.feedback.neutral} />
+        <StatisticLine text="bad" value={props.feedback.bad} />
+        <StatisticLine text="total" value={props.feedback.total} />
+        <StatisticLine text="average" value={props.feedback.average / props.feedback.total} />
+        <StatisticLine text="positive" value={(props.feedback.good / props.feedback.total) * 100 + '%'} />
+       </tbody>
+     </table>
+   )
 }
 
 const StatisticLine = ({text, value}) => {
@@ -69,7 +69,6 @@ const App = () => {
     }
     setFeedback(newClicks)
   }
-
 
   return (
     <div>
