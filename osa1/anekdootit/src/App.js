@@ -12,15 +12,19 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
   
-  const [selected, setSelected] = useState(0)
   const totalVotes = Array(8).fill(0)
+  const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(totalVotes)
+  const [mostPopular, setMostPopular] = useState(0)
 
   const handleVoteClick = () => {
     let votesCopy = {...votes}
     votesCopy[selected] += 1
     setVotes(votesCopy)
-    console.log(votesCopy)
+
+    if (votes[selected] >= votes[mostPopular]) {  
+      setMostPopular(selected)
+    }
   }
  
   const handleNextClick = () => {
@@ -30,6 +34,9 @@ const App = () => {
   return (
     <div>
       <div>
+        <h1>Anecdote of the day</h1>
+      </div>
+      <div>
       {anecdotes[selected]}
       </div>
       <div>
@@ -38,6 +45,15 @@ const App = () => {
       <div>
         <button onClick={handleVoteClick}>vote</button>
         <button onClick={handleNextClick}>next anecdote</button>
+      </div>
+      <div>
+        <h1>Anecdote with most votes</h1>
+      </div>
+      <div>
+        {anecdotes[mostPopular]}
+      </div>
+      <div>
+        has {votes[mostPopular]}
       </div>
     </div>
   )
