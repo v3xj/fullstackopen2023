@@ -7,7 +7,7 @@ const Button = ({handleClick, text}) => (
 )
 
 const Statistics = (props) => {
-  if (props.total === 0) {
+  if (props.all === 0) {
     return (
       <div>
         No feedback given
