@@ -1,23 +1,18 @@
-title 0.4 Uusi muistiinpano
+---
+title: 0.4. Uusi muistiinpano
+---
 
-selain->palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-palvelin->selain: HTML-koodi
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-palvelin->selain: main.css
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-palvelin->selain: main.js
+flowchart LR
+    A[browser]--> |1. HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note| B[server]
+    A--> |2. HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes| B
+    B --> |3. HTML-koodi| A
+    A --> |4. HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css| B
+    B --> |5. main.css| A
+    A --> |6. HTTP GET HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js| B
+    B --> |7. main.js| A
+    A -. 7. selain suorittaa js koodin joka pyytaa JSON datan palvelimelta .-> A
+    A --> |8. HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json| B
+    B --> |9. JSON content| A
+    A -. 10. selain suorittaa tapahtumankasittelijan joka renderoi muistiinpanot naytolle .-> A
 
-note over selain:
-selain suorittaa js-koodin
-joka pyytää JSON-datan
-palvelimelta
-end note
 
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-palvelin-->selain: [{content: 'One more note', date: '2022-12-04T02:09:46.243Z'}, ...]
-
-note over selain:
-selain suorittaa tapahtumankäsittelijän
-joka renderöi muistiinpanot näytölle
-end note

@@ -1,22 +1,17 @@
-title 0.5 Single Page App
+---
+title: 0.6 Single Page App
+---
 
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
-palvelin->selain: HTML-koodi
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-palvelin->selain: main.css
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
-palvelin->selain: spa.js
+flowchart LR
+    A[browser]--> |1. HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa| B[server]
+    B--> |2. HTML-koodi| A
+    A--> |3. HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css| B
+    B --> |4. main.css| A
+    A --> |5. HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js| B
+    B --> |6. spa.js| A
+    A -. 7. selain suorittaa tapahtumankasittelijan joka renderoi muistiinpanot naytolle.-> A
+    A --> |8. HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json| B
+    B --> |9. content| A
+    A -. 10. selain suorittaa tapahtumankasittelijan joka renderoi muistiinpanot naytolle .-> A
 
-note over selain:
-selain suorittaa js-koodin
-joka pyytää JSON-datan
-palvelimelta
-end note
 
-selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-palvelin-->selain: [{content: 'One more note', date: '2022-12-04T02:09:46.243Z'}, ...]
-
-note over selain:
-selain suorittaa tapahtumankäsittelijän
-joka renderöi muistiinpanot näytölle
-end note
