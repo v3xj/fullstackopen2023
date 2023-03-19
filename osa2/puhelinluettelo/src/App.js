@@ -3,7 +3,7 @@ import { useState } from 'react'
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState(
-    'a new name'
+    ''
   )
 
   const addName = (event) => {
@@ -13,9 +13,15 @@ const App = () => {
       id: persons.length + 1,
     }
 
+    const names = persons.map(person => person.content)
+
+    names.includes(newName) ? 
+    alert(`${newName} is already added to phonebook`) :
     setPersons(persons.concat(nameObject))
+
     setNewName('')
   }
+
 
   const handleInputChange = (event) => {
     console.log(event.target.value)
