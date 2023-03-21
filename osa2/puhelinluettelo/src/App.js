@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
@@ -7,12 +8,11 @@ const App = () => {
   const [persons, setPersons] = useState([
     /* TESTIDATAA */
     /*
-    { content: 'Arto Hellas', number: '040-123456', id: 1 },
-    { content: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { content: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { content: 'Mary Poppendieck', number: '39-23-6423122', id: 4}
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4}
     */
-    
   ]) 
   const [newName, setNewName] = useState(
     ''
@@ -25,20 +25,26 @@ const App = () => {
   )
   const [showAll, setShowAll] = useState(true)
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons/').then(response => {
+      setPersons(response.data)
+    })
+  }, [])
+
   const personsToShow = showAll 
     ? persons 
     : persons.filter(person => 
-      person.content.toLowerCase().includes(newFilter)) 
+      person.name.toLowerCase().includes(newFilter)) 
 
   const addPerson = (event) => {
     event.preventDefault()
     const nameObject = {
-      content: newName,
+      name: newName,
       number: newNumber,
       id: persons.length + 1,
     }
 
-    const names = persons.map(person => person.content)
+    const names = persons.map(person => person.name)
     names.includes(newName) 
     ? alert(`${newName} is already added to phonebook`) 
     : setPersons(persons.concat(nameObject))
