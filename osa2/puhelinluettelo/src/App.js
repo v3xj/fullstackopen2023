@@ -49,6 +49,15 @@ const App = () => {
      })
   }
 
+  const deletePerson = (id) => {
+    personService.remove(id)
+    setPersons(
+      persons.filter((person) => {
+         return person.id !== id;
+      })
+   );
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -76,7 +85,7 @@ const App = () => {
       />
       <div>
         <h3>Numbers</h3>
-        <Persons personsToShow={personsToShow} />
+        <Persons personsToShow={personsToShow} deletePerson={deletePerson} />
       </div>
     </div>
   )
