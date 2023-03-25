@@ -40,13 +40,21 @@ const App = () => {
     }
 
     const names = persons.map(person => person.name)
-    names.includes(newName) 
-    ? alert(`${newName} is already added to phonebook`) 
-    : personService.create(nameObject).then(returnedPerson => {
+     if (names.includes(newName)) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const personToEdit = persons.find(personObject => personObject.name === newName)
+        personService.update(personToEdit.id, nameObject).then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== personToEdit.id ? person : returnedPerson))
+        })
+      }
+     }
+     else {
+      personService.create(nameObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
      })
+     }
   }
 
   const deletePerson = (id) => {
