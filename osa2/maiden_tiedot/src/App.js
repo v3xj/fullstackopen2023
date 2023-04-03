@@ -11,7 +11,6 @@ const App = () => {
 
   useEffect(() => {
     if (newFilter) {
-      console.log('fetching countries...')
       axios
         .get(`https://restcountries.com/v3.1/all`)
         .then(response => {
