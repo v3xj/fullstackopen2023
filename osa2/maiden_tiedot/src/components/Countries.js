@@ -1,4 +1,12 @@
+import Country from './Country'
+
 const Countries = (props) => {
+  if (props.countriesToShow.length === 1) {
+      return (
+          <Country country={props.countriesToShow} />
+      )
+    
+  }
   if (props.countriesToShow.length > 10) {
     return (
       <div>
@@ -6,7 +14,7 @@ const Countries = (props) => {
       </div>
     )
   }
-  else {
+  if (1 < props.countriesToShow.length < 10) {
     return (
     <div>
         {props.countriesToShow.map(country => 
