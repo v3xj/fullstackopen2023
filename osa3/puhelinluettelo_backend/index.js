@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const path = require('path')
+
+app.use(express.json())
 
 let persons = [
     {
@@ -60,6 +61,16 @@ app.delete('/api/persons/:id', (request, response) => {
     persons = persons.filter(person => person.id !== id)
   
     response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+    const person = request.body
+
+    person.id = Math.floor(Math.random() * (Math.ceil(1) * Math.floor(99999999)) + 1)
+
+    persons = persons.concat(person)
+    console.log(person)
+    response.json(person)
 })
   
 const PORT = 3001
