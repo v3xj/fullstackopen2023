@@ -3,7 +3,7 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
 
 let persons = [
     {
@@ -82,8 +82,8 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    if (persons.filter(person => 
-        person.name.toLowerCase().includes(body.name))) {
+    if (persons.find(person => 
+        person.name.toLowerCase() === body.name)) {
             return response.status(400).json({
                 error: ' name must be unique'
             })
@@ -95,9 +95,9 @@ app.post('/api/persons', (request, response) => {
         id: generateId(),
     }
 
-
     persons = persons.concat(person)
     response.json(person)
+    morgan.token('body', req => { return JSON.stringify(req.body) })
 })
   
 const PORT = 3001
