@@ -94,22 +94,19 @@ const App = () => {
     }
     else {
       personService.create(nameObject).then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setStatusCode(1)
-        setStatusMessage(
-          `Person '${returnedPerson.name}' successfully added to server`
-        )
-        setTimeout(() => {
-          setStatusMessage(null)
-        }, 5000)
-        setNewName('')
-        setNewNumber('')
-     })
-     .catch(error => {
-      setStatusMessage(error.response.data)
-      console.log(error.response.data)
-     })
-     }
+          setPersons(persons.concat(returnedPerson))
+          setStatusCode(1)
+          setStatusMessage(`Person '${returnedPerson.name}' successfully added to server`)
+          setTimeout(() => {
+            setStatusMessage(null)
+          }, 5000)
+          setNewName('')
+          setNewNumber('')})
+        .catch(error => {
+          setStatusCode(0)
+          setStatusMessage(error.response.data.error)
+        })
+    }
   }
 
   const deletePerson = (id) => {

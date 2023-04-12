@@ -12,20 +12,6 @@ app.use(express.static('build'))
 morgan.token('body', req => { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
 
-const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
-
-    if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id'})
-    }
-    else if (error.name === 'ValidationError') {
-        return response.status(400).json({ error: error.message })
-    }
-    next(error)
-}
-
-app.use(errorHandler)
-
 app.get('/', (request, response) => {
     response.send('<h1>Puhelinluettelon backend</h1>')
 })
@@ -75,7 +61,10 @@ app.post('/api/persons/', (request, response, next) => {
     person.save().then(savedPerson => {
         response.json(savedPerson)
     })
-    .catch(error => next(error))
+    .catch(error => { 
+        console.log(error)
+        next(error)
+    })
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -88,9 +77,31 @@ app.put('/api/persons/:id', (request, response, next) => {
     .then(updatedPerson => {
         response.json(updatedPerson)
     })
-    .catch(error => next(error))
+    .catch(error =>  {
+        console.log(error)
+        next(error)
+    })
     
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+    else if (error.name === 'ValidationError' || error.name === 'ValidatorError') {
+        return response.status(400).send({ error: error.message })
+    }
+}
+
+app.use(errorHandler)
   
 const PORT = process.env.PORT
 app.listen(PORT, () => {
