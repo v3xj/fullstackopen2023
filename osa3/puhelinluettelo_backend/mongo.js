@@ -5,15 +5,8 @@ const personsName = process.argv[3]
 const personsNumber = process.argv[4]
 
 const personSchema = new mongoose.Schema({
-    name: {
-      type: String,
-      minlength: 3,
-      required: true
-    },
-    number: {
-      type: String,
-      required: true
-    }
+    name: String,
+    number: String,
 })
   
 const Person = mongoose.model('Person', personSchema)
