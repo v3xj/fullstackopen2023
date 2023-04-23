@@ -32,7 +32,7 @@ const mostBlogs = (blogs) => {
   var blogAmountOfWriterWithMostBlogs = _.find(blogsPerWriter, function(o) {
     return o === _.max(_.map(blogsPerWriter))
   })
-  
+
   const returnable = {
     'author' : writerWithMostBlogs,
     'blogs' : blogAmountOfWriterWithMostBlogs
@@ -40,6 +40,35 @@ const mostBlogs = (blogs) => {
   return returnable
 }
 
+const mostLikes = (blogs) => {
+  var eachBloggerAndLikes = []
+  blogs.map(blog => {
+    var writerName = blog.author
+    var blogLikes = blog.likes
+
+    const bloggerObject = {
+      'author': writerName,
+      'likes': blogLikes
+    }
+    var blogger = eachBloggerAndLikes.find(o => o.author === bloggerObject.author)
+
+    if (blogger) {
+      blogger.likes += bloggerObject.likes
+    } else {
+      eachBloggerAndLikes.push(bloggerObject)
+    }
+  })
+
+  //console.log(eachBloggerAndLikes)
+
+  var bloggerWithMostLikes = eachBloggerAndLikes.reduce((a, b) => 
+  (a.likes > b.likes) ? a : b)
+
+  //console.log(bloggerWithMostLikes)
+
+  return bloggerWithMostLikes
+}
+
 module.exports = {
-  dummy, totalLikes, favoriteBlog, mostBlogs
+  dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes
 }
