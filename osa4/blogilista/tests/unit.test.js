@@ -194,6 +194,9 @@ describe('writer of most blogs', () => {
 
   test('when list has several blogs returns the author who has written most blogs', () => {
     const result = listHelper.mostBlogs(listWithSeveralBlogs)
-    expect(result).toBe("Robert C. Martin")
+    expect(result).toStrictEqual({
+      author: "Robert C. Martin",
+      blogs: 3
+    })
   })
 })

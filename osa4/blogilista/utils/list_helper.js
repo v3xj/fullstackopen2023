@@ -17,12 +17,10 @@ const favoriteBlog = (blogs) => {
   let mostLikes = 0;
   blogs.map(blog => {
     if (blog.likes > highest) {
-      console.log(blog.title + 'Likes: ' + blog.likes + ' NEW HIGHEST FOUND')
       highest = blog.likes
       mostLikes = blog
     }
   })
-  console.log(mostLikes)
   return mostLikes
 }
 
@@ -31,7 +29,15 @@ const mostBlogs = (blogs) => {
   var writerWithMostBlogs = _.findKey(blogsPerWriter, function(o) {
     return o === _.max(_.map(blogsPerWriter))
   })
-  return writerWithMostBlogs
+  var blogAmountOfWriterWithMostBlogs = _.find(blogsPerWriter, function(o) {
+    return o === _.max(_.map(blogsPerWriter))
+  })
+  
+  const returnable = {
+    'author' : writerWithMostBlogs,
+    'blogs' : blogAmountOfWriterWithMostBlogs
+  }
+  return returnable
 }
 
 module.exports = {
