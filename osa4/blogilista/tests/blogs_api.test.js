@@ -76,7 +76,8 @@ test('if value for "likes" is not given, it defaults to 0', async () => {
   const blogWithNoLikes = {
     title: "THIS BLOG SHOULD HAVE ZERO LIKES",
     author: 'v3xj',
-    url: 'test'
+    url: 'test',
+    likes: ''
   }
 
   await api
