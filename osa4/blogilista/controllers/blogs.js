@@ -26,14 +26,28 @@ blogsRouter.post('/', async (request, response, next) => {
     body.likes = 0;
   }
 
+  if (body.title === undefined) {
+    return response.status(400).json({
+      error: 'blog must have a "title" field'
+    })
+  }
+
+  if (body.url === undefined) {
+    return response.status(400).json({
+      error: 'blog must have a "url" field'
+    })
+  }
+
+  const userId = await User.findById(body.user, 'id')
   const user = await User.findById(body.user)
+  console.log(' POSTAUS USER VALUE:', body)
 
   const blog = new Blog({
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes,
-    user: user.id
+    user: userId
   })
 
   const savedBlog = await blog.save()
