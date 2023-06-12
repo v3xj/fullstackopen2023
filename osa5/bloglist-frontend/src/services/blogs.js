@@ -12,5 +12,14 @@ const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
+const createNew = async newObject => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  const response = axios.post(baseUrl, newObject, config)
+  return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, setToken }
+export default { getAll, setToken, createNew }
