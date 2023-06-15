@@ -12,7 +12,8 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [blog, setBlog] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [statusMessage, setStatusMessage] = useState(null)
+  const [statusCode, setStatusCode] = useState()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -30,6 +31,26 @@ const App = () => {
     }
   }, [])
 
+  const Notification = ({message, code}) => {
+    if (message === null) {
+      return null
+    }
+    if (code === 1) {
+      return (
+        <div className="success">
+          {message}
+        </div>
+      )
+    }
+    if (code === 0) {
+      return (
+        <div className="error">
+          {message}
+        </div>
+      )
+    }
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -44,9 +65,10 @@ const App = () => {
       blogService.setToken(user.token)
       setUser(user)
     } catch (exception) {
-      setErrorMessage('wrong credentials')
+      setStatusCode(0)
+      setStatusMessage('invalid username or password')
       setTimeout(() => {
-        setErrorMessage(null)
+        setStatusMessage(null)
       }, 5000)
     }
     console.log('logging in with', username, password)
@@ -61,9 +83,10 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('logout failed')
+      setStatusCode(0)
+      setStatusMessage('logout failed')
       setTimeout(() => {
-        setErrorMessage(null)
+        setStatusMessage(null)
       }, 5000)
     }
     console.log('logging out')
@@ -73,11 +96,28 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const blog = await blogService.createNew({
-        title, author, url
-      })
-      setBlog(blog)
-    } catch {
+      if (title.length > 0 && author.length > 0 && url.length > 0) {
+        const blog = await blogService.createNew({
+          title, author, url
+        })
+        blogService.getAll().then(blogs =>
+          setBlogs( blogs )
+        )  
+        setBlog(blog)
+        setStatusCode(1)
+        setStatusMessage(`a new blog ${title} by ${author} added`)
+        setTimeout(() => {
+          setStatusMessage(null)
+        }, 5000)
+      }
+      
+    } catch (exception) {
+      console.log(exception)
+      setStatusCode(0)
+      setStatusMessage('creating new blog failed')
+      setTimeout(() => {
+        setStatusMessage(null)
+      }, 5000)
 
     }
   }
@@ -86,6 +126,7 @@ const App = () => {
     return (
       <div>
       <h2>blogs</h2>
+      <Notification message={statusMessage} code={statusCode} />
       <h3>logged in as {username}
       <button onClick={handleLogout}>log out</button></h3>
       <h2>create new</h2>
@@ -129,6 +170,7 @@ const App = () => {
   return (
     <div>
       <h2>Login</h2>
+      <Notification message={statusMessage} code={statusCode} />
       <form onSubmit={handleLogin}>
         <div>
           username
@@ -151,7 +193,6 @@ const App = () => {
         <button type="submit">login</button>
       </form>
     </div>
-    
   )
 }
 
