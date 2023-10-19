@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -15,6 +15,7 @@ const App = () => {
   const [blog, setBlog] = useState(null)
   const [statusMessage, setStatusMessage] = useState(null)
   const [statusCode, setStatusCode] = useState()
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -95,6 +96,7 @@ const App = () => {
 
   const handleCreateNew = async (event) => {
     event.preventDefault()
+    blogFormRef.current.toggleVisibility()
 
     try {
       if (title.length > 0 && author.length > 0 && url.length > 0) {
@@ -130,8 +132,8 @@ const App = () => {
       <Notification message={statusMessage} code={statusCode} />
       <h3>logged in as {username}
       <button onClick={handleLogout}>log out</button></h3>
-      <Togglable buttonLabel='new blog'>
-      <h2>create new</h2>
+      <Togglable buttonLabel='new blog' ref={blogFormRef}>
+        <h2>create new</h2>
       <form onSubmit={handleCreateNew}>
         <div>
           title:
