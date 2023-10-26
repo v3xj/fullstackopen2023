@@ -102,7 +102,7 @@ const App = () => {
         })  
         setBlog(blog)
         blogService.getAll().then(blogs =>
-          setBlogs( blogs )
+          setBlogs( blogs.sort((a, b) => b.likes - a.likes ))
         )
         setStatusCode(1)
         setStatusMessage(`a new blog ${title} by ${author} added`)
