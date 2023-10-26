@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-const Blog = ({blog}) => {
+const Blog = ({blog, updateBlog}) => {
   const [visible, setVisible] = useState(false)
+  const [likes, setLikes] = useState(blog.likes)
+  const pageRendered = useRef(false)
 
   const showWhenVisible = { display: visible ? '' : 'none' }
   const buttonText = { text: visible ? 'hide' : 'view'}
@@ -10,12 +12,29 @@ const Blog = ({blog}) => {
     setVisible(!visible)
   }
 
+  useEffect(() => {
+    if (pageRendered.current) {
+      updateBlog({
+        title: blog.title,
+        author: blog.author,
+        url: blog.url,
+        likes: likes,
+        id: blog.id
+      })
+    }
+    pageRendered.current = true;
+  }, [likes])
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5
+  }
+
+  const addLike = () => { 
+    setLikes(likes + 1)
   }
 
   return (
@@ -30,8 +49,8 @@ const Blog = ({blog}) => {
             {blog.url}
           </div>
           <div>
-            likes: {blog.likes}
-            <button>like</button>
+            likes: {likes}
+            <button onClick={addLike}>like</button>
           </div>
           <div>
             {blog.author}

@@ -121,6 +121,10 @@ const App = () => {
 
     }
   }
+
+  const handleLike = ({title, author, url, likes, id}) => {
+    blogService.addLike({title, author, url, likes, id})
+  }
  
   if (user !== null) {
     return (
@@ -134,7 +138,7 @@ const App = () => {
       </Togglable>
       
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateBlog={handleLike}/>
       )}
       </div>
     )
