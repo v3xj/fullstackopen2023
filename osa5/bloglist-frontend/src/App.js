@@ -125,6 +125,28 @@ const App = () => {
   const handleLike = ({title, author, url, likes, id}) => {
     blogService.addLike({title, author, url, likes, id})
   }
+
+  const handleDelete = ({id}) => {
+    try {
+      blogService.deleteBlog({id})
+      blogService.getAll().then(blogs =>
+        setBlogs( blogs.sort((a, b) => b.likes - a.likes ))
+      )
+      setStatusCode(1)
+      setStatusMessage(`blog deleted`)
+      setTimeout(() => {
+        setStatusMessage(null)
+      }, 5000)
+    }     
+   catch (exception) {
+      console.log(exception)
+      setStatusCode(0)
+      setStatusMessage('deleting blog failed')
+      setTimeout(() => {
+        setStatusMessage(null)
+      }, 5000)
+    }
+  }
  
   if (user !== null) {
     return (
@@ -138,7 +160,7 @@ const App = () => {
       </Togglable>
       
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={handleLike}/>
+        <Blog key={blog.id} blog={blog} updateBlog={handleLike} deleteBlog={handleDelete} user={username}/>
       )}
       </div>
     )
