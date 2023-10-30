@@ -46,3 +46,24 @@ test("renders all content of a blog when viewed", () => {
   expect(likes).toBeDefined()
 
 })
+
+test("clicking the button twice calls event handler twice", async () => {
+  const blog= {
+    title: "Component testing is done with react-testing-library",
+    url: "www.test.com",
+    author: "testuser",
+    likes: "999"
+  }
+
+  const mockHandler = jest.fn()
+
+  render(
+    <Blog blog={blog} updateBlog={mockHandler} />
+  )
+
+  const user = userEvent.setup()
+  const button = screen.getByText("like")
+  await user.click(button)
+
+  expect(mockHandler.mock.calls).toHaveLength(1)
+})
