@@ -1,5 +1,5 @@
-import axios from 'axios'
-const baseUrl = '/api/blogs'
+import axios from "axios"
+const baseUrl = "/api/blogs"
 
 let token = null
 
@@ -26,7 +26,7 @@ const addLike = async updatedObject => {
     headers: { Authorization: token }
   }
 
-  const response = axios.put(baseUrl + '/' + updatedObject.id, updatedObject, config)
+  const response = axios.put(baseUrl + "/" + updatedObject.id, updatedObject, config)
   return response.data
 }
 
@@ -35,7 +35,7 @@ const deleteBlog = async objectToDelete => {
     headers: { Authorization: token }
   }
 
-  const response = axios.delete(baseUrl + '/' + objectToDelete.id, objectToDelete, config)
+  const response = axios.delete(baseUrl + "/" + objectToDelete.id, objectToDelete, config)
   return response.data
 }
 

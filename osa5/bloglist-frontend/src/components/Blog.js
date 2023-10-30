@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from "react"
 
 const Blog = ({ blog, updateBlog, deleteBlog, user }) => {
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
   const pageRendered = useRef(false)
 
-  const showWhenVisible = { display: visible ? '' : 'none' }
-  const buttonText = { text: visible ? 'hide' : 'view' }
+  const showWhenVisible = { display: visible ? "" : "none" }
+  const buttonText = { text: visible ? "hide" : "view" }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -28,7 +28,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: 'solid',
+    border: "solid",
     borderWidth: 1,
     marginBottom: 5
   }
