@@ -4,7 +4,7 @@ import "@testing-library/jest-dom"
 import BlogForm from "./BlogForm"
 import userEvent from "@testing-library/user-event"
 
-test("<BlogForm /> calls createBlog onSubmit", async () => {
+test("<BlogForm /> calls createBlog onSubmit with correct data", async () => {
   const user = userEvent.setup()
   const createBlog = jest.fn()
 
