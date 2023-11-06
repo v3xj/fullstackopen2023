@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
-import blogService from './services/blogs'
-import loginService from './services/login'
-import Togglable from './components/Togglable'
-import BlogForm from './components/BlogForm'
+import { useState, useEffect, useRef } from "react"
+import Blog from "./components/Blog"
+import blogService from "./services/blogs"
+import loginService from "./services/login"
+import Togglable from "./components/Togglable"
+import BlogForm from "./components/BlogForm"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
   const [blog, setBlog] = useState(null)
   const [statusMessage, setStatusMessage] = useState(null)
@@ -22,7 +22,7 @@ const App = () => {
   }, [blog])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser")
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -60,18 +60,18 @@ const App = () => {
       })
 
       window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
+        "loggedBlogappUser", JSON.stringify(user)
       )
       blogService.setToken(user.token)
       setUser(user)
     } catch (exception) {
       setStatusCode(0)
-      setStatusMessage('invalid username or password')
+      setStatusMessage("invalid username or password")
       setTimeout(() => {
         setStatusMessage(null)
       }, 5000)
     }
-    console.log('logging in with', username, password)
+    console.log("logging in with", username, password)
   }
 
   const handleLogout = async (event) => {
@@ -80,16 +80,16 @@ const App = () => {
     try {
       window.localStorage.clear()
       setUser(null)
-      setUsername('')
-      setPassword('')
+      setUsername("")
+      setPassword("")
     } catch (exception) {
       setStatusCode(0)
-      setStatusMessage('logout failed')
+      setStatusMessage("logout failed")
       setTimeout(() => {
         setStatusMessage(null)
       }, 5000)
     }
-    console.log('logging out')
+    console.log("logging out")
   }
 
   const handleCreateNew = ({ title, author, url }) => {
@@ -114,7 +114,7 @@ const App = () => {
     } catch (exception) {
       console.log(exception)
       setStatusCode(0)
-      setStatusMessage('creating new blog failed')
+      setStatusMessage("creating new blog failed")
       setTimeout(() => {
         setStatusMessage(null)
       }, 5000)
@@ -133,7 +133,7 @@ const App = () => {
         setBlogs( blogs.sort((a, b) => b.likes - a.likes ))
       )
       setStatusCode(1)
-      setStatusMessage('blog deleted')
+      setStatusMessage("blog deleted")
       setTimeout(() => {
         setStatusMessage(null)
       }, 5000)
@@ -141,7 +141,7 @@ const App = () => {
     catch (exception) {
       console.log(exception)
       setStatusCode(0)
-      setStatusMessage('deleting blog failed')
+      setStatusMessage("deleting blog failed")
       setTimeout(() => {
         setStatusMessage(null)
       }, 5000)
