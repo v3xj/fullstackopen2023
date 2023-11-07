@@ -72,5 +72,15 @@ describe("Blog app", function() {
       cy.contains("remove").click()
       cy.get(".success").contains("blog deleted")
     })
+
+    it("A remove button can be seen only by blogs' author", function() {
+      cy.contains("new blog").click()
+      cy.get("#blog-title").type("a blog created by cypress")
+      cy.get("#blog-author").type("ei-testikayttaja")
+      cy.get("#blog-url").type("urlbycypress.test")
+      cy.get("#create-blog-button").click()
+      cy.contains("view").click()
+      cy.contains("remove").should("not.exist")
+    })
   })
 })
