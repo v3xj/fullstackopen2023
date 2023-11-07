@@ -5,6 +5,7 @@ module.exports = {
     "browser": true,
     "es2021": true,
     "jest/globals": true,
+    "cypress/globals": true,
   },
   "globals": {
     "window": true,
@@ -19,7 +20,9 @@ module.exports = {
   "ignorePatterns": ["dist", ".eslintrc.cjs"],
   "parserOptions": { "ecmaVersion": "latest", "sourceType": "module" },
   "settings": { "react": { "version": "18.2" } },
-  "plugins": ["react-refresh", "jest"],
+  "plugins": [
+    "react-refresh", "jest", "cypress"
+  ],
   "rules": {
     "indent": [
       "error",
