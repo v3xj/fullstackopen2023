@@ -17,7 +17,7 @@ describe("Blog app", function() {
     cy.contains("log in")
   })
 
-  describe("Login",function() {
+  describe("Login", function() {
     it("succeeds with correct credentials", function() {
       cy.get("#username").type("testikayttaja")
       cy.get("#password").type("testi")
@@ -32,6 +32,21 @@ describe("Blog app", function() {
       cy.get("#login-button").click()
 
       cy.get(".error").contains("invalid username or password")
+    })
+  })
+
+  describe("When logged in", function() {
+    beforeEach(function() {
+      cy.login({ username: "testikayttaja", password: "testi" })
+    })
+
+    it("A blog can be created", function() {
+      cy.contains("new blog").click()
+      cy.get("#blog-title").type("a blog created by cypress")
+      cy.get("#blog-author").type("cypress")
+      cy.get("#blog-url").type("urlbycypress.test")
+      cy.get("#create-blog-button").click()
+      cy.contains("a blog created by cypress")
     })
   })
 })
