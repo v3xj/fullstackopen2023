@@ -61,5 +61,16 @@ describe("Blog app", function() {
       cy.contains("like").click()
       cy.contains("likes: 2")
     })
+
+    it("A blog added can be deleted by its' author", function() {
+      cy.contains("new blog").click()
+      cy.get("#blog-title").type("a blog created by cypress")
+      cy.get("#blog-author").type("testikayttaja")
+      cy.get("#blog-url").type("urlbycypress.test")
+      cy.get("#create-blog-button").click()
+      cy.contains("view").click()
+      cy.contains("remove").click()
+      cy.get(".success").contains("blog deleted")
+    })
   })
 })
