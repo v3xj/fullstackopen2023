@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -22,20 +23,23 @@ const initialState = anecdotesAtStart.map(asObject)
 const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
-  if (action.type === 'increase-votes') {
-    const id = action.payload.id
-    const anecdoteToChange = state.find(obj => obj.id === id)
-    const changedAnecdote = {
-      ...anecdoteToChange,
-      votes : anecdoteToChange.votes + 1
+  switch(action.type) {
+    case 'NEW_ANECDOTE':
+      return [...state, action.payload]
+    case 'INCREASE_COUNTER':
+      const id = action.payload.id
+      const anecdoteToChange = state.find(obj => obj.id === id)
+      const changedAnecdote = {
+        ...anecdoteToChange,
+        votes : anecdoteToChange.votes + 1
+      }
+      return state.map(anec =>
+        anec.id !== id ? anec : changedAnecdote 
+      )
+  
+    default: 
+      return state  
     }
-    return state.map(anec =>
-      anec.id !== id ? anec : changedAnecdote 
-    )
-
-  }
-
-  return state  
 }
 
 export default reducer
