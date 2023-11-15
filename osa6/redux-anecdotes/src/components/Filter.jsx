@@ -7,10 +7,11 @@ const Filter = () => {
   const handleChange = (event) => {
     const filter = event.target.value
     if (filter !== '') {
+      console.log('KUTSUTAAN FILTERCHANGE: ', filterChange(filter))
       dispatch(filterChange(filter))
     }
     else {
-      dispatch(filterChange('ALL'))
+      dispatch(filterChange(''))
     }
   }
 
