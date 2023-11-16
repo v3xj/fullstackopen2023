@@ -4,8 +4,8 @@ import { hideNotification, showNotification } from '../reducers/notificationRedu
 
 const AnecdoteList = () => {
   const dispatch = useDispatch()
+
   const anecdotes = useSelector(state => {
-    console.log('STATE.FILTER IN ANECDOTE LIST: ', state.filter)
     if (state.filter === 'ALL') {
       return state.anecdotes
     }
