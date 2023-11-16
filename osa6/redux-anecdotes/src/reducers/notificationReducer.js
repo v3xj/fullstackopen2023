@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = { 
-  type: 'notification',
-  payload: 'TEST NOTIFICATION',
+  type: 'notification/hideNotification',
+  payload: '',
 }
 
 const notificationSlice = createSlice({
@@ -10,14 +10,26 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     showNotification(state, action) {
+      console.log('ACTION IN showNotification: ', action)
       const content = action.payload
-      return {
-        type: 'notification',
-        payload: content
+      if (action.type === 'notification/showNotification') {
+        return {
+          type: 'notification/showNotification',
+          payload: content
+        }
+      }
+    },
+    hideNotification(state, action) {
+      console.log('ACTION IN hideNotification: ', action)
+      if (action.type === "notification/hideNotification") {
+        return {
+          type: 'notification/hideNotification',
+          payload: ''
+        }
       }
     }
   }
 })
 
-export const { showNotification } = notificationSlice.actions
+export const { showNotification, hideNotification } = notificationSlice.actions
 export default notificationSlice.reducer

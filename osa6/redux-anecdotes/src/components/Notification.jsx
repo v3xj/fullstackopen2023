@@ -7,10 +7,16 @@ const Notification = () => {
     padding: 10,
     borderWidth: 1
   }
+  
+  if (notification.type === 'notification/showNotification') {
+    return (
+      <div style={style}>
+        {notification.payload}
+      </div>
+    )
+  }
   return (
-    <div style={style}>
-      {notification.payload}
-    </div>
+    <div></div>
   )
 }
 
